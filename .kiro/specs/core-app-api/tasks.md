@@ -6,10 +6,10 @@ Make the verified application layer permanent: golden story gate, negative scena
 ## Tasks
 
 - [ ] 1. Golden story gate
-  - [ ] 1.1 Create `test/golden/story.test.ts` exactly as in design.md
+  - [x] 1.1 Create `test/golden/story.test.ts` exactly as in design.md
     - **Done when:** `npx vitest run test/golden` → 19 tests pass (18 steps + determinism). If any step fails, debug the code, never the fixture; if you believe the fixture is wrong, BLOCKED.md
     - _Requirements: 7.1, 6.3_
-  - [ ] 1.2 Checkpoint: `npm run verify`, then commit `test(app): golden ripple story gate (spec core-app-api, task 1)`, then push
+  - [x] 1.2 Checkpoint: `npm run verify`, then commit `test(app): golden ripple story gate (spec core-app-api, task 1)`, then push
     - _Requirements: 7.1_
 
 - [ ] 2. Negative and edge scenarios
