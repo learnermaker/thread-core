@@ -34,22 +34,22 @@ Testkit and helpers first, then tests for the contract and the reference modules
   - `npm run verify`, then `git add -A`, `git commit -m "test(model): contract, store and testkit (spec core-model, tasks 1-2)"`, `git push`
   - _Requirements: 1.1, 2.1, 3.1, 6.1_
 
-- [ ] 4. Thread derivation and seeding
-  - [ ] 4.1 `test/engine/derive.test.ts`: assert every row of "Key facts to assert" in design.md for the tourney, refill and dinner windows and conditions (order and windows), and the creation evidence. Also: the creator is auto-added to participants, and the default autonomy is `COORDINATE`
+- [x] 4. Thread derivation and seeding
+  - [x] 4.1 `test/engine/derive.test.ts`: assert every row of "Key facts to assert" in design.md for the tourney, refill and dinner windows and conditions (order and windows), and the creation evidence. Also: the creator is auto-added to participants, and the default autonomy is `COORDINATE`
     - **Done when:** `npx vitest run test/engine/derive.test.ts` passes
     - _Requirements: 4.1, 4.2, 6.1_
-  - [ ] 4.2 In the same file, the validation errors: unknown type, owner `leo` (minor), BRING_ITEM without item, deadline after event end, unknown place, duplicate thread id → each `OpError` with `body.code === "VALIDATION_FAILED"`
+  - [x] 4.2 In the same file, the validation errors: unknown type, owner `leo` (minor), BRING_ITEM without item, deadline after event end, unknown place, duplicate thread id → each `OpError` with `body.code === "VALIDATION_FAILED"`
     - **Done when:** `npx vitest run test/engine/derive.test.ts` passes
     - _Requirements: 4.3_
-  - [ ] 4.3 `recomputeWindows` test: push travel signal `{ place: "place_riverside", minutes: 40, cause: "heavy rain", source_id: "wx", at: <any> }` → the `r_transport` window start is `2026-10-10T14:40:00.000Z`, and an existing `block` is unchanged
+  - [x] 4.3 `recomputeWindows` test: push travel signal `{ place: "place_riverside", minutes: 40, cause: "heavy rain", source_id: "wx", at: <any> }` → the `r_transport` window start is `2026-10-10T14:40:00.000Z`, and an existing `block` is unchanged
     - **Done when:** `npx vitest run test/engine/derive.test.ts` passes
     - _Requirements: 4.4_
 
-- [ ] 5. Availability
-  - [ ] 5.1 `test/engine/availability.test.ts`: (a) a busy interval for maya Sat 07:00–13:00 → a `BUSY` conflict against her transport window; (b) after setting `r_transport.owner = "sam"`, `status = "ACCEPTED"` and `block = { block_id: "blk_1", start: <window.start>, end: <window.end> }` in the tourney, `conflicts(state, reg, "sam", refillWindow, "thr_rosa_refill")` → `[{ code: "COMMITMENT", text: "driving Leo until 12:30 PM (accepted earlier)" }]`; (c) the same call with exceptThreadId `thr_leo_tourney` → `[]`; (d) r_jersey (BRING_ITEM) never conflicts; (e) maya owns r_transport and r_pickup with overlapping windows but no blocks → `conflicts(state, reg, "maya", pickupWindow, "thr_rosa_refill")` is `[]`; plus **Property 4**
+- [x] 5. Availability
+  - [x] 5.1 `test/engine/availability.test.ts`: (a) a busy interval for maya Sat 07:00–13:00 → a `BUSY` conflict against her transport window; (b) after setting `r_transport.owner = "sam"`, `status = "ACCEPTED"` and `block = { block_id: "blk_1", start: <window.start>, end: <window.end> }` in the tourney, `conflicts(state, reg, "sam", refillWindow, "thr_rosa_refill")` → `[{ code: "COMMITMENT", text: "driving Leo until 12:30 PM (accepted earlier)" }]`; (c) the same call with exceptThreadId `thr_leo_tourney` → `[]`; (d) r_jersey (BRING_ITEM) never conflicts; (e) maya owns r_transport and r_pickup with overlapping windows but no blocks → `conflicts(state, reg, "maya", pickupWindow, "thr_rosa_refill")` is `[]`; plus **Property 4**
     - **Done when:** `npx vitest run test/engine/availability.test.ts` passes
     - _Requirements: 5.1, 5.2, 5.3, 5.4_
 
-- [ ] 6. Checkpoint: commit
+- [x] 6. Checkpoint: commit
   - `npm run verify`, then `git add -A`, `git commit -m "test(engine): derivation, availability, seeding (spec core-model, tasks 4-5)"`, `git push`
   - _Requirements: 4.1, 5.1_
