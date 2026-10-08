@@ -5,32 +5,32 @@ Testkit and helpers first, then tests for the contract and the reference modules
 
 ## Tasks
 
-- [ ] 1. Testkit and test helpers
-  - [ ] 1.1 Create `src/testkit/clock.ts`, `src/testkit/calendar.ts`, `src/testkit/service.ts` and `src/testkit/index.ts` exactly as in design.md
+- [x] 1. Testkit and test helpers
+  - [x] 1.1 Create `src/testkit/clock.ts`, `src/testkit/calendar.ts`, `src/testkit/service.ts` and `src/testkit/index.ts` exactly as in design.md
     - **Done when:** `npx tsc -p tsconfig.build.json --noEmit` passes and `node scripts/check-purity.mjs` prints `purity ok`
     - _Requirements: 6.2, 6.3, 6.4, 6.5_
-  - [ ] 1.2 Create `test/helpers.ts` exactly as in design.md
+  - [x] 1.2 Create `test/helpers.ts` exactly as in design.md
     - **Done when:** `npx tsc --noEmit` passes
     - _Requirements: 6.1_
-  - [ ] 1.3 Create `test/testkit/testkit.test.ts`: the clock set/advance; the calendar idempotent `ref`, move, verify true/false and `failNext`; the service quote before/after slot start, idempotent `order_ref`, PLACED vs DELIVERED at `2026-10-10T10:42:00-07:00`, and the `calls` log
+  - [x] 1.3 Create `test/testkit/testkit.test.ts`: the clock set/advance; the calendar idempotent `ref`, move, verify true/false and `failNext`; the service quote before/after slot start, idempotent `order_ref`, PLACED vs DELIVERED at `2026-10-10T10:42:00-07:00`, and the `calls` log
     - **Done when:** `npx vitest run test/testkit` passes
     - _Requirements: 6.2, 6.3, 6.4, 6.5_
 
-- [ ] 2. Contract tests
-  - [ ] 2.1 `test/model/schemas.test.ts`: the Seed parses; an unknown field, a bad id (`"Maya"`) and a bad instant (`"tomorrow"`) are rejected with the issue path; `z.toJSONSchema(Thread)` has `additionalProperties: false`
+- [x] 2. Contract tests
+  - [x] 2.1 `test/model/schemas.test.ts`: the Seed parses; an unknown field, a bad id (`"Maya"`) and a bad instant (`"tomorrow"`) are rejected with the issue path; `z.toJSONSchema(Thread)` has `additionalProperties: false`
     - **Done when:** `npx vitest run test/model/schemas.test.ts` passes
     - _Requirements: 1.1, 1.2, 1.3_
-  - [ ] 2.2 `test/model/time.test.ts`: `fmtTime` (`7:55 AM`), `fmtDay` (`Saturday`), `fmtRange` (en dash), `fmtMoney(499)` (`$4.99`), `fmtMoney(1200)` (`$12.00`), `toUtc` of `2026-10-10T08:30:00-07:00` (`2026-10-10T15:30:00.000Z`), `overlaps` (touching windows don't overlap), `within` (inclusive); plus **Property 1**
+  - [x] 2.2 `test/model/time.test.ts`: `fmtTime` (`7:55 AM`), `fmtDay` (`Saturday`), `fmtRange` (en dash), `fmtMoney(499)` (`$4.99`), `fmtMoney(1200)` (`$12.00`), `toUtc` of `2026-10-10T08:30:00-07:00` (`2026-10-10T15:30:00.000Z`), `overlaps` (touching windows don't overlap), `within` (inclusive); plus **Property 1**
     - **Done when:** `npx vitest run test/model/time.test.ts` passes
     - _Requirements: 2.1, 2.2_
-  - [ ] 2.3 `test/model/util.test.ts`: `nextId` sequences, `stableStringify` key-order independence, `cmp`, `clone` deep copy; plus **Property 2**
+  - [x] 2.3 `test/model/util.test.ts`: `nextId` sequences, `stableStringify` key-order independence, `cmp`, `clone` deep copy; plus **Property 2**
     - **Done when:** `npx vitest run test/model/util.test.ts` passes
     - _Requirements: 2.3, 2.4_
-  - [ ] 2.4 `test/store/memory.test.ts`: commit/load/version, stale version → `StoreConflictError` with nothing changed, events appended in order; plus **Property 3**
+  - [x] 2.4 `test/store/memory.test.ts`: commit/load/version, stale version → `StoreConflictError` with nothing changed, events appended in order; plus **Property 3**
     - **Done when:** `npx vitest run test/store` passes
     - _Requirements: 3.1, 3.2, 3.3_
 
-- [ ] 3. Checkpoint: commit
+- [x] 3. Checkpoint: commit
   - `npm run verify`, then `git add -A`, `git commit -m "test(model): contract, store and testkit (spec core-model, tasks 1-2)"`, `git push`
   - _Requirements: 1.1, 2.1, 3.1, 6.1_
 
