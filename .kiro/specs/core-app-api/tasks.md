@@ -13,23 +13,23 @@ Make the verified application layer permanent: golden story gate, negative scena
     - _Requirements: 7.1_
 
 - [ ] 2. Negative and edge scenarios
-  - [ ] 2.1 `test/app/authz.test.ts`: N2, N10, N11, plus `ingestSignal` and `tick` called as a person → `FORBIDDEN`, and Golden step s09 behavior (sam approving cf_1 → `WRONG_PRINCIPAL`, the pharmacy fake has no `act:` call)
+  - [x] 2.1 `test/app/authz.test.ts`: N2, N10, N11, plus `ingestSignal` and `tick` called as a person → `FORBIDDEN`, and Golden step s09 behavior (sam approving cf_1 → `WRONG_PRINCIPAL`, the pharmacy fake has no `act:` call)
     - **Done when:** `npx vitest run test/app/authz.test.ts` passes
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 4.7_
-  - [ ] 2.2 `test/app/ripple.test.ts`: N1, N7, N8, N9, and a duplicate `ingestSignal` (same `source_id`) → `duplicate: true` with no new events
+  - [x] 2.2 `test/app/ripple.test.ts`: N1, N7, N8, N9, and a duplicate `ingestSignal` (same `source_id`) → `duplicate: true` with no new events
     - **Done when:** `npx vitest run test/app/ripple.test.ts` passes
     - _Requirements: 3.1, 3.2, 3.4, 3.5, 4.7_
-  - [ ] 2.3 `test/app/handoff.test.ts`: N3, N4, plus a TRANSACT reject (maya rejects cf_1 → handoff `CANCELLED`, `r_pickup` `AT_RISK`), plus a repeated `requestHandoff` while pending → same handoff id
+  - [x] 2.3 `test/app/handoff.test.ts`: N3, N4, plus a TRANSACT reject (maya rejects cf_1 → handoff `CANCELLED`, `r_pickup` `AT_RISK`), plus a repeated `requestHandoff` while pending → same handoff id
     - **Done when:** `npx vitest run test/app/handoff.test.ts` passes
     - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 6.2_
-  - [ ] 2.4 `test/app/evidence.test.ts`: N5, N6, and tick before 10:42 (no change) vs at 10:42 (refill RESOLVED, evidence `observed_at` `2026-10-10T17:42:00.000Z`)
+  - [x] 2.4 `test/app/evidence.test.ts`: N5, N6, and tick before 10:42 (no change) vs at 10:42 (refill RESOLVED, evidence `observed_at` `2026-10-10T17:42:00.000Z`)
     - **Done when:** `npx vitest run test/app/evidence.test.ts` passes
     - _Requirements: 5.1, 5.2, 5.3_
-  - [ ] 2.5 `test/app/robustness.test.ts`: N12, N13, N14, N15, N16
+  - [x] 2.5 `test/app/robustness.test.ts`: N12, N13, N14, N15, N16
     - **Done when:** `npx vitest run test/app/robustness.test.ts` passes
     - _Requirements: 1.1, 1.2, 1.3, 6.1, 6.4_
 
-- [ ] 3. Checkpoint: commit
+- [x] 3. Checkpoint: commit
   - `npm run verify`, then commit `test(app): authorization, ripple, handoff, evidence, robustness (spec core-app-api, task 2)`, then push
   - _Requirements: 1.1, 2.1, 3.1, 4.1, 5.1, 6.1_
 
