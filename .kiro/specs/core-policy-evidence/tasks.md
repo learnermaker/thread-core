@@ -24,18 +24,18 @@ Tests and property tests for `src/engine/policy.ts` and `src/engine/status.ts` (
     - **Done when:** `npx vitest run test/engine/status.test.ts` passes
     - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5_
 
-- [ ] 3. Checkpoint: commit
+- [x] 3. Checkpoint: commit
   - `npm run verify`, then commit `test(engine): context policy, receipts, evidence, derived status (spec core-policy-evidence, tasks 1-2)`, then push
   - _Requirements: 2.1, 4.1_
 
-- [ ] 4. Property tests
-  - [ ] 4.1 `test/engine/policy.properties.test.ts`: Property 1
+- [x] 4. Property tests
+  - [x] 4.1 `test/engine/policy.properties.test.ts`: Property 1
     - **Done when:** `npx vitest run test/engine/policy.properties.test.ts` passes
     - _Requirements: 1.2, 2.3_
-  - [ ] 4.2 `test/engine/status.properties.test.ts`: Properties 2, 3, 4 and 5
+  - [x] 4.2 `test/engine/status.properties.test.ts`: Properties 2, 3, 4 and 5
     - **Done when:** `npx vitest run test/engine/status.properties.test.ts` passes
     - _Requirements: 3.2, 4.1, 4.2_
 
-- [ ] 5. Checkpoint: commit
+- [x] 5. Checkpoint: commit
   - `npm run verify`, then commit `test(engine): privacy and resolution properties (spec core-policy-evidence, task 4)`, then push
   - _Requirements: 2.3, 4.2_
