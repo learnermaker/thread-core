@@ -1,0 +1,83 @@
+{
+  "household": {
+    "id": "hh_rivera",
+    "name": "Rivera household",
+    "timezone": "America/Los_Angeles",
+    "home_place": "place_home",
+    "persons": [
+      { "id": "maya", "name": "Maya", "adult": true, "has_account": true, "can_drive": true, "guardian_of": ["leo"] },
+      { "id": "sam", "name": "Sam", "adult": true, "has_account": true, "can_drive": true, "guardian_of": ["leo"] },
+      { "id": "rosa", "name": "Rosa", "adult": true, "has_account": true, "can_drive": false, "guardian_of": [] },
+      { "id": "leo", "name": "Leo", "adult": false, "has_account": false, "can_drive": false, "guardian_of": [] }
+    ],
+    "places": [
+      { "id": "place_home", "name": "Home", "travel_minutes": 0 },
+      { "id": "place_riverside", "name": "Riverside Fields", "travel_minutes": 25 },
+      { "id": "place_pharmacy", "name": "the pharmacy", "travel_minutes": 10 },
+      { "id": "place_bistro", "name": "Corner Bistro", "travel_minutes": 15 }
+    ]
+  },
+  "facts": [
+    { "id": "fact_rx_label", "thread_id": "thr_rosa_refill", "key": "item_label", "label": "Item", "value": "Rosa's prescription", "owner": "rosa", "sensitivity": "THREAD", "shared_with": [] },
+    { "id": "fact_rx_detail", "thread_id": "thr_rosa_refill", "key": "item_detail", "label": "Rosa's medication name", "value": "Atorvastatin 20 mg", "owner": "rosa", "sensitivity": "PRIVATE", "shared_with": ["maya"] },
+    { "id": "fact_address", "thread_id": "thr_rosa_refill", "key": "delivery_address", "label": "Delivery address", "value": "12 Alder Lane", "owner": "maya", "sensitivity": "THREAD", "shared_with": [] }
+  ],
+  "threads": [
+    {
+      "created_by": "maya",
+      "created_at": "2026-10-05T19:00:00-07:00",
+      "input": {
+        "id": "thr_leo_tourney",
+        "title": "Leo's Saturday Tournament",
+        "objective": "Leo arrives at Riverside Fields with his jersey before 8:30 AM check-in",
+        "beneficiary": "leo",
+        "event": { "start": "2026-10-10T09:00:00-07:00", "end": "2026-10-10T12:00:00-07:00", "place": "place_riverside" },
+        "deadline": "2026-10-10T08:30:00-07:00",
+        "participants": ["leo", "maya", "sam"],
+        "autonomy": "COORDINATE",
+        "handoff_policy": { "eligible": ["guardian_of:leo", "household_adult"] },
+        "responsibilities": [
+          { "id": "r_transport", "type": "TRANSPORT", "owner": "maya" },
+          { "id": "r_jersey", "type": "BRING_ITEM", "owner": "sam", "item": "jersey" }
+        ]
+      }
+    },
+    {
+      "created_by": "maya",
+      "created_at": "2026-10-06T08:15:00-07:00",
+      "input": {
+        "id": "thr_rosa_refill",
+        "title": "Rosa's prescription refill",
+        "objective": "Rosa has her refill before the pharmacy closes at noon Saturday",
+        "beneficiary": "rosa",
+        "event": { "start": "2026-10-10T09:00:00-07:00", "end": "2026-10-10T12:00:00-07:00", "place": "place_pharmacy" },
+        "deadline": "2026-10-10T12:00:00-07:00",
+        "participants": ["maya", "rosa"],
+        "autonomy": "COORDINATE",
+        "responsibilities": [{ "id": "r_pickup", "type": "PICKUP", "owner": "maya", "item": "rx_rosa" }]
+      }
+    },
+    {
+      "created_by": "maya",
+      "created_at": "2026-10-07T20:30:00-07:00",
+      "input": {
+        "id": "thr_family_dinner",
+        "title": "Family dinner",
+        "objective": "The whole family has dinner together at Corner Bistro on Saturday at 7 PM",
+        "event": { "start": "2026-10-10T19:00:00-07:00", "end": "2026-10-10T21:00:00-07:00", "place": "place_bistro" },
+        "deadline": "2026-10-10T19:00:00-07:00",
+        "participants": ["maya", "sam", "rosa", "leo"],
+        "autonomy": "COORDINATE",
+        "responsibilities": [{ "id": "r_reservation", "type": "ATTEND", "owner": "maya" }]
+      }
+    }
+  ],
+  "providers": {
+    "svc_pharmacy_delivery": {
+      "name": "Pharmacy delivery",
+      "handles": ["PICKUP"],
+      "quote": { "slot": { "start": "2026-10-10T10:00:00-07:00", "end": "2026-10-10T11:00:00-07:00" }, "amount_cents": 499, "currency": "USD" },
+      "delivered_at": "2026-10-10T10:42:00-07:00"
+    }
+  }
+}

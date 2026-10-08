@@ -1,0 +1,12 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "post-task-verify-and-log",
+      "trigger": "PostTaskExec",
+      "action": { "type": "command", "command": "node scripts/hooks/post-task-log.mjs" },
+      "timeout": 300,
+      "enabled": true
+    }
+  ]
+}

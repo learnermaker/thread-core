@@ -1,0 +1,12 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "no-stop-while-red",
+      "trigger": "Stop",
+      "action": { "type": "command", "command": "node scripts/hooks/stop-verify.mjs" },
+      "timeout": 300,
+      "enabled": true
+    }
+  ]
+}

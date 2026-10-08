@@ -1,0 +1,12 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "guard-protected-files",
+      "trigger": "PreToolUse",
+      "action": { "type": "command", "command": "node scripts/hooks/guard-protected.mjs" },
+      "timeout": 10,
+      "enabled": true
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "fixtures/golden/ripple-story.json": "8b882fd274cf7e2749af6024cfa7972b7a26105e1430816e60d5a7bcd8841426",
+  "fixtures/golden/rivera-seed.json": "946800e844340f47eda1f4e173c110ef973b7f925870484976e721e66a621588",
+  "src/model/errors.ts": "112d6bf18f908e2ebf23e59b4c84b0f8fb876f5346f38ff00b3894868364ac82",
+  "src/model/schemas.ts": "a019eea0795d5e8723ff5b06f65beedd62959eff2ec502246578a6e4b7e05f06",
+  "src/model/time.ts": "f78760b64fa16fa2824a2765f718bcfe936c7d4e16da3c23ada3f18d43347d8e",
+  "src/model/util.ts": "1e28c06ddfda503e800dba4d0cdf5303e46a0a3bf4b596f973ab2f7b477081ae",
+  "src/ports.ts": "388fa8701464056a323a1bfca5a976da35703eb278f1ba28d669a680372fc5e6",
+  "src/registry/types.ts": "18a0eec692d41ac2e251381a89eed7efef7750ccdacbc7519bcdbee05ebd1c41",
+  "src/store/memory.ts": "bc760bde92e4d4ec5b53dec93dd71ceace980380aee2eb9a9331751777a11e67"
+}

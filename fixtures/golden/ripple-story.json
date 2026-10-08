@@ -1,0 +1,371 @@
+{
+  "description": "Canonical THREAD ripple story (Master Spec §E1/§D14). Each step sets the clock, calls one app operation as a principal, and the result must toMatchObject(expect). Architect-owned: never edit.",
+  "seed": "rivera-seed.json",
+  "steps": [
+    {
+      "id": "s01_weekend_overview",
+      "at": "2026-10-08T19:30:00-07:00",
+      "op": "listThreads",
+      "as": "maya",
+      "input": {},
+      "expect": {
+        "ok": true,
+        "data": {
+          "threads": [
+            { "thread_id": "thr_leo_tourney", "status": "ACTIVE" },
+            { "thread_id": "thr_rosa_refill", "status": "PLAN_SECURED" },
+            { "thread_id": "thr_family_dinner", "status": "PLAN_SECURED" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "s02_ripple",
+      "at": "2026-10-08T19:31:00-07:00",
+      "op": "reportChange",
+      "as": "maya",
+      "input": {
+        "change": { "type": "PERSON_UNAVAILABLE", "person": "maya", "start": "2026-10-10T07:00:00-07:00", "end": "2026-10-10T13:00:00-07:00" },
+        "idempotency_key": "ripple-1"
+      },
+      "expect": {
+        "ok": true,
+        "data": {
+          "threads": [
+            {
+              "thread_id": "thr_leo_tourney", "severity": "HIGH", "status": "AT_RISK",
+              "why": [
+                "Maya is unavailable Saturday 7:00 AM–1:00 PM.",
+                "Maya owned Transport, which Leo's Saturday Tournament needs.",
+                "Best option: Sam (free 7:55 AM–12:30 PM, can drive, has the jersey, already involved)."
+              ]
+            },
+            {
+              "thread_id": "thr_rosa_refill", "severity": "HIGH", "status": "AT_RISK",
+              "why": [
+                "Maya is unavailable Saturday 7:00 AM–1:00 PM.",
+                "Maya owned Pickup, which Rosa's prescription refill needs.",
+                "Best option: Sam (free 9:00 AM–12:00 PM, can drive)."
+              ]
+            },
+            {
+              "thread_id": "thr_family_dinner", "severity": "NONE", "status": "PLAN_SECURED",
+              "why": ["Maya is free again by 1:00 PM; Family dinner is at 7:00 PM, so no action needed."]
+            }
+          ],
+          "proposals": [
+            {
+              "thread_id": "thr_leo_tourney", "responsibility_id": "r_transport",
+              "recommended": { "id": "sam", "kind": "person", "score": 5 },
+              "candidates": [
+                {
+                  "id": "sam", "eligible": true,
+                  "reasons": [
+                    { "code": "FREE", "ok": true, "text": "free 7:55 AM–12:30 PM" },
+                    { "code": "CAN_DRIVE", "ok": true, "text": "can drive" },
+                    { "code": "HOLDS_ITEM", "ok": true, "text": "has the jersey" },
+                    { "code": "PARTICIPANT", "ok": true, "text": "already involved" }
+                  ]
+                }
+              ],
+              "excluded": [{ "id": "rosa", "eligible": false }]
+            },
+            {
+              "thread_id": "thr_rosa_refill", "responsibility_id": "r_pickup",
+              "recommended": { "id": "sam", "kind": "person", "score": 0 },
+              "candidates": [{ "id": "sam" }, { "id": "svc_pharmacy_delivery", "kind": "service" }],
+              "excluded": [{ "id": "rosa" }]
+            }
+          ],
+          "automatic_actions": []
+        }
+      }
+    },
+    {
+      "id": "s02b_ripple_repeat_is_idempotent",
+      "at": "2026-10-08T19:31:30-07:00",
+      "op": "reportChange",
+      "as": "maya",
+      "input": {
+        "change": { "type": "PERSON_UNAVAILABLE", "person": "maya", "start": "2026-10-10T07:00:00-07:00", "end": "2026-10-10T13:00:00-07:00" },
+        "idempotency_key": "ripple-1"
+      },
+      "expect": { "ok": true, "data": { "threads": [{ "thread_id": "thr_leo_tourney", "severity": "HIGH" }, { "thread_id": "thr_rosa_refill" }, { "thread_id": "thr_family_dinner" }] } }
+    },
+    {
+      "id": "s03_handoff_to_sam",
+      "at": "2026-10-08T19:32:00-07:00",
+      "op": "requestHandoff",
+      "as": "maya",
+      "input": { "thread_id": "thr_leo_tourney", "responsibility_id": "r_transport" },
+      "expect": {
+        "ok": true,
+        "data": {
+          "handoff": { "id": "ho_1", "to": "sam", "to_kind": "person", "status": "PENDING" },
+          "receipt": {
+            "recipient": "sam",
+            "shared": [
+              { "key": "event_time", "label": "Event time", "value": "Saturday 9:00 AM" },
+              { "key": "deadline", "label": "Be there by", "value": "Saturday 8:30 AM" },
+              { "key": "place", "label": "Place", "value": "Riverside Fields" },
+              { "key": "beneficiary", "label": "Who", "value": "Leo" },
+              { "key": "items_status", "label": "Items", "value": "jersey: with Sam" },
+              { "key": "depart_by", "label": "Leave by", "value": "Saturday 7:55 AM" }
+            ],
+            "withheld": [
+              { "label": "Maya's reason for being unavailable" },
+              { "label": "Other calendar events" },
+              { "label": "Private notes" }
+            ]
+          },
+          "thread": { "thread_id": "thr_leo_tourney", "status": "HANDOFF_PENDING" }
+        }
+      }
+    },
+    {
+      "id": "s04_sam_inbox",
+      "at": "2026-10-08T19:32:30-07:00",
+      "op": "inbox",
+      "as": "sam",
+      "input": {},
+      "expect": { "ok": true, "data": { "messages": [{ "kind": "HANDOFF_REQUEST", "handoff_id": "ho_1", "thread_id": "thr_leo_tourney" }] } }
+    },
+    {
+      "id": "s05_maya_cannot_accept_for_sam",
+      "at": "2026-10-08T19:33:00-07:00",
+      "op": "respondToHandoff",
+      "as": "maya",
+      "input": { "handoff_id": "ho_1", "accept": true },
+      "expect": { "ok": false, "error": { "code": "WRONG_PRINCIPAL" } }
+    },
+    {
+      "id": "s06_sam_accepts",
+      "at": "2026-10-08T19:33:00-07:00",
+      "op": "respondToHandoff",
+      "as": "sam",
+      "input": { "handoff_id": "ho_1", "accept": true, "confirm_items": ["jersey"], "add_to_calendar": true },
+      "expect": {
+        "ok": true,
+        "data": {
+          "handoff": { "id": "ho_1", "status": "ACCEPTED" },
+          "thread": {
+            "thread_id": "thr_leo_tourney",
+            "status": "PLAN_SECURED",
+            "responsibilities": [
+              { "id": "r_transport", "owner": "sam", "status": "ACCEPTED", "window": { "start": "2026-10-10T14:55:00.000Z", "end": "2026-10-10T19:30:00.000Z" } },
+              { "id": "r_jersey", "owner": "sam" }
+            ],
+            "conditions": [
+              { "id": "c_transport_owner", "satisfied": true },
+              { "id": "c_departure_plan", "satisfied": true, "evidence": { "strength": "SYSTEM_VERIFIED" } },
+              { "id": "c_jersey", "satisfied": true },
+              { "id": "c_arrival", "satisfied": false }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "s07_accept_again_is_idempotent",
+      "at": "2026-10-08T19:33:10-07:00",
+      "op": "respondToHandoff",
+      "as": "sam",
+      "input": { "handoff_id": "ho_1", "accept": true, "confirm_items": ["jersey"], "add_to_calendar": true },
+      "expect": { "ok": true, "data": { "handoff": { "id": "ho_1", "status": "ACCEPTED" }, "thread": { "status": "PLAN_SECURED" } } }
+    },
+    {
+      "id": "s08_refill_rerank_to_service",
+      "at": "2026-10-08T19:34:00-07:00",
+      "op": "requestHandoff",
+      "as": "maya",
+      "input": { "thread_id": "thr_rosa_refill", "responsibility_id": "r_pickup" },
+      "expect": {
+        "ok": true,
+        "data": {
+          "candidates": [{ "id": "svc_pharmacy_delivery", "kind": "service", "eligible": true }],
+          "excluded": [
+            {
+              "id": "rosa",
+              "reasons": [
+                { "code": "FREE", "ok": true },
+                { "code": "CAN_DRIVE", "ok": false, "text": "doesn't drive" }
+              ]
+            },
+            {
+              "id": "sam",
+              "reasons": [
+                { "code": "FREE", "ok": false, "text": "driving Leo until 12:30 PM (accepted earlier)" },
+                { "code": "CAN_DRIVE", "ok": true }
+              ]
+            }
+          ],
+          "handoff": { "id": "ho_2", "to": "svc_pharmacy_delivery", "to_kind": "service", "status": "PENDING_CONFIRMATION" },
+          "requires_confirmation": {
+            "confirmation_id": "cf_1",
+            "kind": "TRANSACT",
+            "summary": "Pharmacy delivery, Saturday 10:00 AM–11:00 AM, $4.99",
+            "amount_cents": 499,
+            "currency": "USD"
+          },
+          "receipt": {
+            "recipient": "svc_pharmacy_delivery",
+            "recipient_kind": "service",
+            "shared": [
+              { "key": "order_ref", "value": "ref_ho_2" },
+              { "key": "delivery_address", "value": "12 Alder Lane" },
+              { "key": "slot", "value": "Saturday 10:00 AM–11:00 AM" }
+            ],
+            "withheld": [
+              { "label": "Rosa's medication name" },
+              { "label": "Maya's reason for being unavailable" },
+              { "label": "Other calendar events" },
+              { "label": "Private notes" }
+            ]
+          },
+          "thread": { "thread_id": "thr_rosa_refill", "status": "HANDOFF_PENDING" }
+        }
+      }
+    },
+    {
+      "id": "s09_sam_cannot_approve_mayas_purchase",
+      "at": "2026-10-08T19:34:30-07:00",
+      "op": "confirmAction",
+      "as": "sam",
+      "input": { "confirmation_id": "cf_1", "approve": true },
+      "expect": { "ok": false, "error": { "code": "WRONG_PRINCIPAL" } }
+    },
+    {
+      "id": "s10_maya_approves_order",
+      "at": "2026-10-08T19:35:00-07:00",
+      "op": "confirmAction",
+      "as": "maya",
+      "input": { "confirmation_id": "cf_1", "approve": true, "idempotency_key": "order-1" },
+      "expect": {
+        "ok": true,
+        "data": {
+          "confirmation": { "id": "cf_1", "kind": "TRANSACT", "status": "APPROVED" },
+          "thread": {
+            "thread_id": "thr_rosa_refill",
+            "status": "PLAN_SECURED",
+            "responsibilities": [{ "id": "r_pickup", "owner": "svc_pharmacy_delivery", "owner_kind": "service", "status": "ACCEPTED" }],
+            "conditions": [
+              { "id": "c_pickup_owner", "min_strength": "SYSTEM_VERIFIED", "satisfied": true, "evidence": { "strength": "SYSTEM_VERIFIED" } },
+              { "id": "c_received", "satisfied": false }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "s11_all_plans_secured",
+      "at": "2026-10-08T19:36:00-07:00",
+      "op": "listThreads",
+      "as": "maya",
+      "input": {},
+      "expect": {
+        "ok": true,
+        "data": {
+          "threads": [
+            { "thread_id": "thr_leo_tourney", "status": "PLAN_SECURED" },
+            { "thread_id": "thr_rosa_refill", "status": "PLAN_SECURED" },
+            { "thread_id": "thr_family_dinner", "status": "PLAN_SECURED" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "s12_saturday_rain_autonomous_step",
+      "at": "2026-10-10T07:05:00-07:00",
+      "op": "ingestSignal",
+      "as": "system",
+      "input": { "signal": { "type": "TRAVEL_TIME_CHANGED", "place": "place_riverside", "minutes": 40, "cause": "heavy rain", "source_id": "wx_sat_0705" } },
+      "expect": {
+        "ok": true,
+        "data": {
+          "duplicate": false,
+          "threads": [
+            {
+              "thread_id": "thr_leo_tourney", "severity": "MEDIUM", "status": "PLAN_SECURED",
+              "why": ["Heavy rain: travel to Riverside Fields is now 40 min.", "Leave by 7:40 AM instead of 7:55 AM."]
+            }
+          ],
+          "proposals": [],
+          "automatic_actions": [{ "thread_id": "thr_leo_tourney", "responsibility_id": "r_transport", "action": "ADJUST_PLAN" }]
+        }
+      }
+    },
+    {
+      "id": "s13_duplicate_signal_ignored",
+      "at": "2026-10-10T07:05:30-07:00",
+      "op": "ingestSignal",
+      "as": "system",
+      "input": { "signal": { "type": "TRAVEL_TIME_CHANGED", "place": "place_riverside", "minutes": 40, "cause": "heavy rain", "source_id": "wx_sat_0705" } },
+      "expect": { "ok": true, "data": { "duplicate": true, "threads": [], "proposals": [], "automatic_actions": [] } }
+    },
+    {
+      "id": "s14_block_moved_to_0740",
+      "at": "2026-10-10T07:06:00-07:00",
+      "op": "getThread",
+      "as": "sam",
+      "input": { "thread_id": "thr_leo_tourney" },
+      "expect": {
+        "ok": true,
+        "data": {
+          "thread": {
+            "status": "PLAN_SECURED",
+            "responsibilities": [
+              { "id": "r_transport", "owner": "sam", "window": { "start": "2026-10-10T14:40:00.000Z", "end": "2026-10-10T19:30:00.000Z" } },
+              { "id": "r_jersey" }
+            ],
+            "conditions": [
+              { "id": "c_transport_owner", "satisfied": true },
+              { "id": "c_departure_plan", "satisfied": true },
+              { "id": "c_jersey", "satisfied": true },
+              { "id": "c_arrival", "satisfied": false }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "s15_sam_arrives",
+      "at": "2026-10-10T08:21:00-07:00",
+      "op": "recordEvidence",
+      "as": "sam",
+      "input": { "thread_id": "thr_leo_tourney", "condition_id": "c_arrival", "note": "We're here" },
+      "expect": {
+        "ok": true,
+        "data": {
+          "evidence": { "condition_id": "c_arrival", "strength": "ATTESTED", "satisfied": true },
+          "remaining": [],
+          "thread": { "thread_id": "thr_leo_tourney", "status": "RESOLVED" }
+        }
+      }
+    },
+    {
+      "id": "s16_pharmacy_delivered",
+      "at": "2026-10-10T10:42:00-07:00",
+      "op": "tick",
+      "as": "system",
+      "input": {},
+      "expect": { "ok": true, "data": { "changed": [{ "thread_id": "thr_rosa_refill", "from": "PLAN_SECURED", "to": "RESOLVED" }] } }
+    },
+    {
+      "id": "s17_weekend_summary",
+      "at": "2026-10-10T10:43:00-07:00",
+      "op": "listThreads",
+      "as": "maya",
+      "input": {},
+      "expect": {
+        "ok": true,
+        "data": {
+          "threads": [
+            { "thread_id": "thr_leo_tourney", "status": "RESOLVED" },
+            { "thread_id": "thr_rosa_refill", "status": "RESOLVED" },
+            { "thread_id": "thr_family_dinner", "status": "PLAN_SECURED" }
+          ]
+        }
+      }
+    }
+  ]
+}
