@@ -11,7 +11,7 @@ inclusion: always
 - **Operator: the user.** Runs you, reviews, relays questions to the architect.
 
 ## Architect-owned files: never edit
-`src/model/**`, `src/ports.ts`, `src/registry/types.ts`, `src/store/memory.ts`, `fixtures/golden/**`, `contract.sha256.json`, `.kiro/specs/**/requirements.md`, `.kiro/specs/**/design.md`, `.kiro/steering/**`, `.kiro/hooks/**`, `scripts/hooks/**`, `scripts/check-*.mjs`, `scripts/verify.mjs`, `crew/overnight-*.md`. (You may tick task checkboxes in `.kiro/specs/**/tasks.md`.)
+`src/model/**`, `src/ports.ts`, `src/registry/types.ts`, `src/store/memory.ts`, `fixtures/golden/**`, `contract.sha256.json`, `.kiro/specs/**/requirements.md`, `.kiro/specs/**/design.md`, `.kiro/steering/**`, `.kiro/hooks/**`, `scripts/hooks/**`, `scripts/check-*.mjs`, `scripts/verify.mjs`. (You may tick task checkboxes in `.kiro/specs/**/tasks.md`.)
 A hook blocks writes to them and `npm run verify` checks their checksums.
 
 Files in `src/engine/` start as **architect reference code** (already verified against the golden story). You own them from then on: integrate, test, and fix real bugs your tests find. Any behavior change must be noted in the commit message, and must not break a golden expectation.

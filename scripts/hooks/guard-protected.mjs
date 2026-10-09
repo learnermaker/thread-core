@@ -19,7 +19,6 @@ process.stdin.on("end", () => {
       /src\/store\/memory\.ts/,
       /contract\.sha256\.json/,
       /\.kiro\/(steering|hooks)\//,
-      /crew\/overnight-[^"']*\.md/,
       /\.kiro\/specs\/[^"']*\/(requirements|design)\.md/, // tasks.md stays writable: Kiro ticks task checkboxes there
       /scripts\/(hooks\/|check-|verify\.mjs)/,
     ];
