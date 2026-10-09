@@ -1,4 +1,4 @@
-# AGENTS.md: instructions for coding agents (Kiro, Claude Code, Copilot, Cursor…)
+# AGENTS.md: instructions for coding agents (Kiro and any other coding agent)
 
 Read `.kiro/steering/*.md` first: product rules, pinned tech, structure, testing, Windows and git rules all apply to every agent.
 

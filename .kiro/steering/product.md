@@ -6,7 +6,7 @@ inclusion: always
 **thread-core** is an open-source (Apache-2.0) *responsibility ledger* for people, agents and services: model who owns what, detect what a change breaks ("What does this change affect?"), hand off with the minimum necessary context (Context Receipt), and resolve only on evidence. It is the engine and application API behind THREAD (an Alexa+ add-on, in the separate `thread-alexa` repo), but it is domain-agnostic: responsibility types are registered at runtime.
 
 ## Roles (important)
-- **Architect / product owner: Claude** (outside this repo). Owns the specs in `.kiro/specs/`, this steering, the hooks, the **contract files** and the **golden fixtures**.
+- **Architect / product owner** (outside this repo). Owns the specs in `.kiro/specs/`, this steering, the hooks, the **contract files** and the **golden fixtures**.
 - **Builder: you (Kiro).** You implement tasks exactly as specified, write the tests, keep `npm run verify` green, and commit.
 - **Operator: the user.** Runs you, reviews, relays questions to the architect.
 
@@ -15,6 +15,17 @@ inclusion: always
 A hook blocks writes to them and `npm run verify` checks their checksums.
 
 Files in `src/engine/` start as **architect reference code** (already verified against the golden story). You own them from then on: integrate, test, and fix real bugs your tests find. Any behavior change must be noted in the commit message, and must not break a golden expectation.
+
+## Who decides (architect vs developer)
+- **The architect is the domain expert and product owner** and decides *what* is built and *how it must behave*: requirements, designs, data shapes, algorithms, tool contracts, wording the user sees, versions and dependencies.
+- **You (Kiro / Kiro Crew) are the developer.** You implement exactly what the spec says, write the tests, keep `npm run verify` green, and handle git and GitHub. You do not make product or design decisions. When the spec is silent or seems wrong, use the BLOCKED protocol; don't decide on your own.
+- If something in the code could be better, propose it in your final summary ("Suggestions for the architect"). Don't change scope, wording, schemas or dependencies yourself.
+
+## Architect reference code (reuse it, don't reinvent it)
+- The architect's verified, runnable code lives in **`../thread-prep/kiro/reference/`** (index: `../thread-prep/kiro/reference/README.md`), and reusable scripts in `../thread-prep/kiro/tasks/`. Starter code in this repo was copied from there.
+- When a task says "copy from reference", **copy the file into this repo** (never import across folders), then adapt it only as design.md says. If you need something the reference already contains, copy it rather than rewriting it.
+- Never edit anything inside `../thread-prep/`; it belongs to the architect.
+- Temporary files (logs, scratch data, downloads) go in **`../thread-scratchpad/`**, never in the repo. If you create something reusable there (a script, a command list), keep it and mention it in your summary.
 
 ## The BLOCKED protocol
 If a task seems impossible without editing an architect-owned file, a golden expectation looks wrong, a required API doesn't exist, or the spec contradicts itself:

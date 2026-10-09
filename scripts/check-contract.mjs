@@ -1,5 +1,5 @@
 // Fails if any architect-owned contract file differs from contract.sha256.json (CRLF normalised to LF).
-// Contract files may only be changed by the architect (Claude) via thread-prep; see .kiro/steering/product.md.
+// Contract files may only be changed by the architect via thread-prep; see .kiro/steering/product.md.
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 

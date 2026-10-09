@@ -62,7 +62,7 @@ npm install https://github.com/learnermaker/thread-core/releases/download/v0.1.0
 
 ## Extending  → docs/extending.md
 ## Design principles  (deterministic · I/O only through ports · zod is the only dependency · every decision explains itself · resolution is derived, never requested)
-## Built with Kiro  (specs in .kiro/specs, steering, hooks; docs/kiro-log.md; architect = Claude, builder = Kiro)
+## Built with Kiro  (specs in .kiro/specs, steering, hooks; docs/kiro-log.md)
 ## Used by  THREAD for Alexa+ (link: github.com/learnermaker/thread-alexa)
 ## Roadmap · Contributing · License
 ```

@@ -43,4 +43,4 @@ node -e "import('thread-core').then(m => console.log(typeof m.createThreadApp, O
 
 ## Contributors
 
-Built spec-first with [Kiro](https://kiro.dev). Architect: Claude. Builder: Kiro.
+Built spec-first with Kiro.

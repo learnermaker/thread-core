@@ -100,7 +100,7 @@ See [docs/extending.md](docs/extending.md) — register custom responsibility ty
 
 ## Built with Kiro
 
-This repo was built spec-first: requirements and design in `.kiro/specs/`, standards in `.kiro/steering/`, guard hooks in `.kiro/hooks/`. Architect = Claude (outside the repo); builder = Kiro (inside). See `docs/kiro-log.md` for the build log.
+Requirements, design and tasks live in `.kiro/specs`; steering and guard hooks keep every change on spec. Kiro implemented and tested it; see `docs/kiro-log.md`.
 
 ## Used by
 

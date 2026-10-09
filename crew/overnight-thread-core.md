@@ -14,7 +14,7 @@ You are working **unattended overnight** in the `thread-core` repository. Nobody
 - Work on the branch Crew gives you (e.g. `kirocrew/task/<id>`). Never commit to or force-push `main` directly; never rewrite history.
 - **After every completed step:** `git add -A` (check `git status` first; never commit `BLOCKED.md` contents of other runs, `.env*`, `node_modules`, `dist`, `coverage`), then commit with the message given in the step, then `git push -u origin HEAD`.
 - **After the first push only:** open a draft pull request so GitHub CI runs on every later push:
-  `gh pr create --draft --base main --title "Overnight: thread-core specs core-model to core-app-api" --body "Automated Kiro Crew run from crew/overnight-thread-core.md. Specs authored by the architect (Claude); implementation and tests by Kiro."`
+  `gh pr create --draft --base main --title "Overnight: thread-core specs core-model to core-app-api" --body "Spec-driven: specs and steering in .kiro/; implementation and tests by Kiro Crew."`
   If a PR for this branch already exists, skip this.
 
 ## BLOCKED protocol (overnight version)

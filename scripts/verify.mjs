@@ -6,6 +6,7 @@ const steps = [
   ["dependency allowlist", "node scripts/check-deps.mjs"],
   ["core purity", "node scripts/check-purity.mjs"],
   ["secret scan", "node scripts/check-secrets.mjs"],
+  ["wording", "node scripts/check-wording.mjs"],
   ["typecheck", "npx tsc --noEmit"],
   ["build typecheck (no Node globals in src)", "npx tsc -p tsconfig.build.json --noEmit"],
   ["tests", "npx vitest run"],
