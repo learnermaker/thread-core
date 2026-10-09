@@ -1,17 +1,41 @@
 {
   "name": "thread-core",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A responsibility ledger for people and agents: detect what a change breaks, hand off with the least context, resolve on evidence.",
   "license": "Apache-2.0",
   "type": "module",
-  "engines": { "node": ">=24" },
-  "repository": { "type": "git", "url": "git+https://github.com/learnermaker/thread-core.git" },
-  "keywords": ["coordination", "responsibility", "handoff", "mcp", "agents", "privacy", "evidence"],
-  "exports": {
-    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
-    "./testkit": { "types": "./dist/testkit/index.d.ts", "default": "./dist/testkit/index.js" }
+  "engines": {
+    "node": ">=24"
   },
-  "files": ["dist", "LICENSE", "NOTICE", "README.md"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/learnermaker/thread-core.git"
+  },
+  "keywords": [
+    "coordination",
+    "responsibility",
+    "handoff",
+    "mcp",
+    "agents",
+    "privacy",
+    "evidence"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./testkit": {
+      "types": "./dist/testkit/index.d.ts",
+      "default": "./dist/testkit/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "NOTICE",
+    "README.md"
+  ],
   "scripts": {
     "build": "node scripts/clean.mjs dist && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
@@ -19,7 +43,9 @@
     "coverage": "vitest run --coverage",
     "verify": "node scripts/verify.mjs"
   },
-  "dependencies": { "zod": "4.6.5" },
+  "dependencies": {
+    "zod": "4.6.5"
+  },
   "devDependencies": {
     "@types/node": "24.19.1",
     "@vitest/coverage-v8": "5.0.3",
