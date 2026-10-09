@@ -1,0 +1,44 @@
+name: Feature request
+description: Suggest an improvement or new capability
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before opening a feature request, check [ROADMAP.md](../../ROADMAP.md) and the open issues.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the use case you are trying to cover.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: |
+        If you have a design in mind, sketch it here. For a new responsibility type or port adapter,
+        a code outline is most helpful.
+    validations:
+      required: false
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Engine (impact, candidates, policy, status)
+        - Application API (operations)
+        - Ports (Store, CalendarConnector, ServiceProvider)
+        - Testkit
+        - Examples
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: checkboxes
+    id: good_first_issue
+    attributes:
+      label: Good first issue?
+      options:
+        - label: I believe this is self-contained and suitable for a first contribution
