@@ -24,6 +24,7 @@ When one link in a plan changes, the person carrying it re-explains everything, 
 ```sh
 git clone https://github.com/learnermaker/thread-core.git
 cd thread-core && npm install
+npm test                       # run the test suite (vitest)
 node examples/caregiver-rota.ts
 ```
 
@@ -100,7 +101,7 @@ See [docs/extending.md](docs/extending.md) — register custom responsibility ty
 
 ## Built with Kiro
 
-Requirements, design and tasks live in `.kiro/specs`; steering and guard hooks keep every change on spec. Kiro implemented and tested it; see `docs/kiro-log.md`.
+Built during the hackathon — first commits October 2026 (`git log --reverse` shows the start of history). Requirements, design and tasks live in `.kiro/specs`; steering and guard hooks keep every change on spec. Kiro IDE and Kiro Crew implemented and tested it; see `docs/kiro-log.md`.
 
 ## Used by
 
